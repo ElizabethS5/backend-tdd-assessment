@@ -5,7 +5,7 @@
 __author__ = "ElizabethS5"
 
 
-import sys
+import sys  # noqa
 import argparse
 
 

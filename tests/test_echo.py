@@ -9,6 +9,9 @@ import subprocess
 
 
 class TestEcho(unittest.TestCase):
+    def setUp(self):
+        self.parser = echo.create_parser()
+
     def test_help(self):
         """ Running the program without arguments should show usage. """
 
@@ -26,14 +29,14 @@ class TestEcho(unittest.TestCase):
         """Tests if --upper flag stores upper in Namespace as True
         and that 'hello' becomes 'HELLO' when program is run."""
         echo.sys.argv = ['echo.py', 'hello', '--upper']
-        self.assertTrue(echo.create_parser().parse_args().upper)
+        self.assertTrue(self.parser.parse_args().upper)
         self.assertEqual(echo.main(), "HELLO")
 
     def test_u_flag(self):
         """Tests if -u flag stores upper in Namespace as True
         and that 'hello' becomes 'HELLO' when program is run."""
         echo.sys.argv = ['echo.py', 'hello', '-u']
-        self.assertTrue(echo.create_parser().parse_args().upper)
+        self.assertTrue(self.parser.parse_args().upper)
         self.assertEqual(echo.main(), "HELLO")
 
     def test_missing_u_upper_flags(self):
@@ -41,21 +44,21 @@ class TestEcho(unittest.TestCase):
         upper in Namespace is stored as False
         and 'hello' does not become 'HELLO' when program is run."""
         echo.sys.argv = ['echo.py', 'hello']
-        self.assertFalse(echo.create_parser().parse_args().upper)
+        self.assertFalse(self.parser.parse_args().upper)
         self.assertNotEqual(echo.main(), "HELLO")
 
     def test_lower_flag(self):
         """Test if --lower flag stores lower in Namespace as True
         and that 'HELLO' becomes 'hello' when program is run."""
         echo.sys.argv = ['echo.py', 'HELLO', '--lower']
-        self.assertTrue(echo.create_parser().parse_args().lower)
+        self.assertTrue(self.parser.parse_args().lower)
         self.assertEqual(echo.main(), "hello")
 
     def test_l_flag(self):
         """Test if -l flag stores lower in Namespace as True
         and that 'HELLO' becomes 'hello' when program is run."""
         echo.sys.argv = ['echo.py', 'HELLO', '-l']
-        self.assertTrue(echo.create_parser().parse_args().lower)
+        self.assertTrue(self.parser.parse_args().lower)
         self.assertEqual(echo.main(), "hello")
 
     def test_missing_l_lower_flags(self):
@@ -63,21 +66,21 @@ class TestEcho(unittest.TestCase):
         lower in Namespace is stored as False
         and 'HELLO' does not become 'hello' when program is run."""
         echo.sys.argv = ['echo.py', 'HELLO']
-        self.assertFalse(echo.create_parser().parse_args().lower)
+        self.assertFalse(self.parser.parse_args().lower)
         self.assertNotEqual(echo.main(), "hello")
 
     def test_title_flag(self):
         """Test if --title flag stores title in Namespace as True
         and that 'hello' becomes 'HELLO' when program is run."""
         echo.sys.argv = ['echo.py', 'hello', '--title']
-        self.assertTrue(echo.create_parser().parse_args().title)
+        self.assertTrue(self.parser.parse_args().title)
         self.assertEqual(echo.main(), "Hello")
 
     def test_t_flag(self):
         """Test if -t flag stores title in Namespace as True
         and that 'hello' becomes 'HELLO' when program is run."""
         echo.sys.argv = ['echo.py', 'hello', '-t']
-        self.assertTrue(echo.create_parser().parse_args().title)
+        self.assertTrue(self.parser.parse_args().title)
         self.assertEqual(echo.main(), "Hello")
 
     def test_missing_t_title_flags(self):
@@ -85,7 +88,7 @@ class TestEcho(unittest.TestCase):
         title in Namespace is stored as False
         and 'hello' does not become 'Hello' when program is run."""
         echo.sys.argv = ['echo.py', 'hello']
-        self.assertFalse(echo.create_parser().parse_args().title)
+        self.assertFalse(self.parser.parse_args().title)
         self.assertNotEqual(echo.main(), "Hello")
 
     def test_all_flags(self):
